@@ -48,11 +48,10 @@ func main() {
 		os.Exit(2)
 	}
 
-	logs.LogInfo.Printf("running, version: %s", version)
-
 	ctxroot := actor.NewActorSystem().Root
 
 	initLogs(debug, logStd)
+	logs.LogInfo.Printf("running, version: %s", version)
 	pubsub.Init(ctxroot)
 
 	time.Sleep(3 * time.Second)
