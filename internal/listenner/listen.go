@@ -2,6 +2,7 @@ package listenner
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/dumacp/go-doors/pkg/gpiosysfsne"
@@ -27,6 +28,7 @@ func Listen(ctx context.Context, gpionumber int, fn func(evt *gpiosysfsne.Event)
 			case <-ctx.Done():
 				return
 			case v := <-ch:
+				fmt.Printf("event: %v\n", v)
 				if time.Since(backupevent.Time) > timeout {
 					fn(v)
 				} else {
