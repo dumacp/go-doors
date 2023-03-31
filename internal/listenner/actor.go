@@ -3,6 +3,7 @@ package listenner
 import (
 	"context"
 	"encoding/json"
+	"log"
 
 	"github.com/asynkron/protoactor-go/actor"
 	"github.com/dumacp/go-doors/api"
@@ -49,6 +50,7 @@ func (a *Actor) Receive(ctx actor.Context) {
 	case *actor.Terminated:
 
 	case *Event:
+		log.Printf("event: %v", msg)
 		id, ok := a.gpioDoor[msg.ID]
 		if !ok {
 			logs.LogWarn.Printf("unknown door id -> pin (%d), id (%d)", msg.ID, id)

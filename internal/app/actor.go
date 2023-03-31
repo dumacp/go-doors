@@ -29,6 +29,8 @@ func NewActor(gps, listen *actor.Props) actor.Actor {
 }
 
 func (a *Actor) Receive(ctx actor.Context) {
+	logs.LogBuild.Printf("Message arrived in %s: %s, %T, %s", ctx.Self().GetId(),
+		ctx.Message(), ctx.Message(), ctx.Sender())
 	switch msg := ctx.Message().(type) {
 	case *actor.Started:
 
