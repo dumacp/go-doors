@@ -24,11 +24,12 @@ func (ev *FdEvents) Events() <-chan *Event {
 
 // Event is a GPIO event.
 type Event struct {
-	RisingEdge bool      // Whether this event is triggered by a rising edge.
 	Time       time.Time // The best estimate of time of event occurrence.
+	Pin        int32
+	RisingEdge bool // Whether this event is triggered by a rising edge.
 }
 
-func newEvents(f *gpioFile) (*FdEvents, error) {
+func newEvents(f *gpioFile, pin int32) (*FdEvents, error) {
 
 	fmt.Println("listen events")
 	var err error
@@ -95,6 +96,7 @@ func newEvents(f *gpioFile) (*FdEvents, error) {
 						default:
 						}
 						events.events <- &Event{
+							Pin:        pin,
 							RisingEdge: value == 1,
 							Time:       time.Now(),
 						}
@@ -126,7 +128,7 @@ func OpenPinWithEvents(n int) (*PinWithEvent, error) {
 		return nil, err
 	}
 
-	events, err := newEvents(p.value)
+	events, err := newEvents(p.value, int32(n))
 	if err != nil {
 		return nil, err
 	}
