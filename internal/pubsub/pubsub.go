@@ -85,7 +85,7 @@ func Subscribe(topic string, pid *actor.PID, parse func([]byte) interface{}) err
 // subscribe subscribe function
 func (ps *pubsubActor) subscribe(topic string, subs *subscribeMSG) error {
 	handler := func(client mqtt.Client, m mqtt.Message) {
-		fmt.Printf("local topic -> %q, local payload - > %s\n", m.Topic(), m.Payload())
+		//fmt.Printf("local topic -> %q, local payload - > %s\n", m.Topic(), m.Payload())
 		m.Ack()
 		msg := subs.parse(m.Payload())
 		// logs.LogBuild.Printf("parse payload-> %s", msg)
