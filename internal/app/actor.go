@@ -38,7 +38,7 @@ func (a *Actor) Receive(ctx actor.Context) {
 			ctx.SpawnNamed(a.propsGsp, "gps")
 		}
 		if a.propsListenner != nil {
-			ctx.SpawnNamed(a.propsGsp, "listenner")
+			ctx.SpawnNamed(a.propsListenner, "listenner")
 		}
 		pubsub.Subscribe("DOORS", ctx.Self(), ParseRequest)
 		logs.LogInfo.Printf("actor %q started", ctx.Self().GetId())
