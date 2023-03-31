@@ -35,9 +35,9 @@ func (a *Actor) Receive(ctx actor.Context) {
 		contxt, cancel := context.WithCancel(context.TODO())
 		a.cancel = cancel
 		for id, v := range a.gpioDoor {
+			id := id
 			fmt.Printf("id: %d\n", id)
 			Listen(contxt, v, func(evt *gpiosysfsne.Event) {
-				id := id
 				ctxroot.RequestWithCustomSender(self, &Event{ID: id, Evt: evt}, self)
 			})
 		}
