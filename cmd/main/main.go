@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -15,17 +16,35 @@ import (
 	"github.com/dumacp/go-logs/pkg/logs"
 )
 
+const (
+	GPIOPuerta1 int = 162
+	GPIOPuerta2 int = 163
+)
+
+const (
+	version = "1.2.0"
+)
+
 var debug bool
+var showVersion bool
 var gpioFrontDoor, gpioRearDoor int
 
 func init() {
 	flag.BoolVar(&debug, "debug", false, "debug")
-	flag.IntVar(&gpioFrontDoor, "frontaldoor", 162, "gpionumber for frontal door")
-	flag.IntVar(&gpioFrontDoor, "backdoor", 163, "gpionumber for back door")
+	flag.IntVar(&gpioFrontDoor, "frontaldoor", GPIOPuerta1, "gpionumber for frontal door")
+	flag.IntVar(&gpioFrontDoor, "backdoor", GPIOPuerta2, "gpionumber for back door")
+	flag.BoolVar(&showVersion, "version", false, "show version")
 }
 
+//var pub *pubsub.PubSub
+
 func main() {
+
 	flag.Parse()
+	if showVersion {
+		fmt.Printf("version: %v\n", version)
+		os.Exit(2)
+	}
 
 	ctxroot := actor.NewActorSystem().Root
 
