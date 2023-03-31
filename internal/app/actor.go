@@ -10,6 +10,7 @@ import (
 	"github.com/dumacp/go-doors/internal/listenner"
 	"github.com/dumacp/go-doors/internal/pubsub"
 	"github.com/dumacp/go-logs/pkg/logs"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
 type Actor struct {
@@ -98,7 +99,8 @@ func (a *Actor) Receive(ctx actor.Context) {
 			Type:      "DOOR",
 		}
 
-		data, err := json.Marshal(extmss)
+		m := protojson.MarshalOptions{EmitUnpopulated: true}
+		data, err := m.Marshal(extmss)
 		if err != nil {
 			logs.LogWarn.Printf("error sending event to pubsub: %s", err)
 			break

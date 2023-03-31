@@ -32,7 +32,7 @@ var gpioFrontDoor, gpioRearDoor int
 func init() {
 	flag.BoolVar(&debug, "debug", false, "debug")
 	flag.IntVar(&gpioFrontDoor, "frontaldoor", GPIOPuerta1, "gpionumber for frontal door")
-	flag.IntVar(&gpioFrontDoor, "backdoor", GPIOPuerta2, "gpionumber for back door")
+	flag.IntVar(&gpioRearDoor, "backdoor", GPIOPuerta2, "gpionumber for back door")
 	flag.BoolVar(&showVersion, "version", false, "show version")
 }
 
