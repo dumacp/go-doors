@@ -86,7 +86,7 @@ func newEvents(f *gpioFile, pin int32) (*FdEvents, error) {
 							return
 						}
 					}
-					// fmt.Printf("gpio( %q ) = %d\n", f.Path, int(buf[0]))
+					fmt.Printf("gpio( %q ) = %d\n", f.Path, int(buf[0]))
 
 					// imprimir el valor actual de la GPIO
 					if value != int(buf[0]) {
@@ -97,7 +97,7 @@ func newEvents(f *gpioFile, pin int32) (*FdEvents, error) {
 						}
 						events.events <- &Event{
 							Pin:        pin,
-							RisingEdge: value == 1,
+							RisingEdge: value != 0x30,
 							Time:       time.Now(),
 						}
 					}
