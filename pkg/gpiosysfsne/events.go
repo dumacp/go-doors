@@ -3,6 +3,7 @@ package gpiosysfsne
 import (
 	"context"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"time"
@@ -29,6 +30,7 @@ type Event struct {
 
 func newEvents(f *gpioFile) (*FdEvents, error) {
 
+	fmt.Println("listen events")
 	var err error
 	if f.rfile == nil {
 		f.rfile, err = os.Open(f.Path)
@@ -83,6 +85,7 @@ func newEvents(f *gpioFile) (*FdEvents, error) {
 							return
 						}
 					}
+					fmt.Printf("gpio( %q ) = %d\n", f.Path, int(buf[0]))
 
 					// imprimir el valor actual de la GPIO
 					if value != int(buf[0]) {
@@ -113,27 +116,27 @@ type PinWithEvent struct {
 }
 
 // OpenPinWithEvents opens a GPIO pin for input and GPIO events.
-func OpenPinWithEvents(n int) (pin *PinWithEvent, err error) {
+func OpenPinWithEvents(n int) (*PinWithEvent, error) {
 	p, err := OpenPin(n)
 	if err != nil {
-		return
+		return nil, err
 	}
 	err = p.SetDirection(In)
 	if err != nil {
-		return
+		return nil, err
 	}
 
 	events, err := newEvents(p.value)
 	if err != nil {
-		return
+		return nil, err
 	}
 
-	pin = &PinWithEvent{
+	pin := &PinWithEvent{
 		Pin:    p,
 		events: events,
 	}
 
-	return
+	return pin, nil
 }
 
 func (pin *PinWithEvent) Close() (err error) {
