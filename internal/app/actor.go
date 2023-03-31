@@ -95,7 +95,7 @@ func (a *Actor) Receive(ctx actor.Context) {
 		}
 		extmss := &api.PubSubEvent{
 			Value:     val,
-			Timestamp: float64(msg.Evt.Time.UnixNano() / 1000000000),
+			Timestamp: float64(msg.Evt.Time.UnixNano()) / 1000000000,
 			Type:      "DOOR",
 		}
 
