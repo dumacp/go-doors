@@ -20,7 +20,13 @@ func Listen(ctx context.Context, gpionumber int, fn func(evt *gpiosysfsne.Event)
 	go func() {
 		defer pin.Close()
 		timeout := 2 * time.Second
-		timer := time.NewTimer(timeout)
+		timer := time.NewTimer(1 * time.Millisecond)
+		if !timer.Stop() {
+			select {
+			case <-timer.C:
+			default:
+			}
+		}
 		defer timer.Stop()
 		backupevent := new(gpiosysfsne.Event)
 		for {
