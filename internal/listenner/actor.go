@@ -2,6 +2,7 @@ package listenner
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/asynkron/protoactor-go/actor"
 	"github.com/dumacp/go-doors/pkg/gpiosysfsne"
@@ -34,7 +35,9 @@ func (a *Actor) Receive(ctx actor.Context) {
 		contxt, cancel := context.WithCancel(context.TODO())
 		a.cancel = cancel
 		for id, v := range a.gpioDoor {
+			fmt.Printf("id: %d\n", id)
 			Listen(contxt, v, func(evt *gpiosysfsne.Event) {
+				id := id
 				ctxroot.RequestWithCustomSender(self, &Event{ID: id, Evt: evt}, self)
 			})
 		}
