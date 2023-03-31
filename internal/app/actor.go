@@ -36,7 +36,11 @@ func (a *Actor) Receive(ctx actor.Context) {
 	case *actor.Started:
 
 		if a.propsGsp != nil {
-			ctx.SpawnNamed(a.propsGsp, "gps")
+			var err error
+			a.pidGps, err = ctx.SpawnNamed(a.propsGsp, "gps")
+			if err != nil {
+				logs.LogWarn.Printf("spawn gps actor error: %s", err)
+			}
 		}
 		if a.propsListenner != nil {
 			ctx.SpawnNamed(a.propsListenner, "listenner")
