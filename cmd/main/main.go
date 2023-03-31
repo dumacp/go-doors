@@ -46,6 +46,8 @@ func main() {
 		os.Exit(2)
 	}
 
+	logs.LogInfo.Printf("running, version: %s", version)
+
 	ctxroot := actor.NewActorSystem().Root
 
 	pubsub.Init(ctxroot)
