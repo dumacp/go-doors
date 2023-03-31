@@ -42,10 +42,12 @@ func (a *Actor) Receive(ctx actor.Context) {
 				ctxroot.RequestWithCustomSender(self, &Event{ID: id, Evt: evt}, self)
 			})
 		}
+		logs.LogInfo.Printf("actor %q started", ctx.Self().GetId())
 	case *actor.Stopping:
 		if a.cancel != nil {
 			a.cancel()
 		}
+		logs.LogInfo.Printf("actor %q stopping", ctx.Self().GetId())
 	case *actor.Stopped:
 	case *actor.Terminated:
 

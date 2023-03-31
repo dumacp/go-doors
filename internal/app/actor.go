@@ -41,6 +41,7 @@ func (a *Actor) Receive(ctx actor.Context) {
 			ctx.SpawnNamed(a.propsGsp, "listenner")
 		}
 		pubsub.Subscribe("DOORS", ctx.Self(), ParseRequest)
+		logs.LogInfo.Printf("actor %q started", ctx.Self().GetId())
 	case *api.DoorsStateRequest:
 		for id, v := range a.lastEvents {
 			val := &api.DoorState{
