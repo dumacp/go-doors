@@ -25,11 +25,12 @@ const (
 	version = "1.2.0_test"
 )
 
-var debug, logStd bool
+var mqtt, debug, logStd bool
 var showVersion bool
 var gpioFrontDoor, gpioRearDoor int
 
 func init() {
+	flag.BoolVar(&mqtt, "mqtt", false, "send messages to local broker. (DECRECATED)")
 	flag.BoolVar(&debug, "debug", false, "debug")
 	flag.BoolVar(&logStd, "logStd", false, "log All in stderr")
 	flag.IntVar(&gpioFrontDoor, "frontaldoor", GPIOPuerta1, "gpionumber for frontal door")
