@@ -1,8 +1,8 @@
 package pubsub
 
 import (
+	"crypto/rand"
 	"fmt"
-	"math/rand"
 	"sync"
 	"time"
 
@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	clientID = "schservices"
+	clientID = "doors"
 )
 
 type pubsubActor struct {

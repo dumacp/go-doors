@@ -22,7 +22,7 @@ const (
 )
 
 const (
-	version = "1.2.0_test"
+	version = "1.2.1"
 )
 
 var mqtt, debug, logStd bool
